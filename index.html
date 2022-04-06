@@ -1,8 +1,39 @@
-<p>Hello 大家好</p>
-<p>我是霸都丶傲天，这是我的个人网站。 </p>
-<p>很高兴你来到这里, 你可以在以下的网站找到我</p>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, minimum-scale=0.1">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>xxx</title>
+<script src="im.js"></script>
+<script>
+function handleFiles(files) {
+  var preview = document.getElementById('preview');
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var imageType = /^image\//;
 
-<ul>
-  <li> <a href="https://www.zhihu.com/people/AJLoveChina">知乎</a> </li>
-  <li> <a href="http://hejie.nigeerhuo.com">我的博客(已经不更细了,现在在知乎写文章)</a> </li>
-</ul>
+    if ( !imageType.test(file.type) ) {
+      continue;
+    }
+
+    var img = document.createElement("img");
+    img.classList.add("obj");
+    img.file = file;
+    // 假设 "preview" 是将要展示图片的 div
+    preview.appendChild(img);
+
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+      return function(e) {
+        aImg.src = e.target.result;
+      };
+    })(img);
+    reader.readAsDataURL(file);
+  }
+}
+</script>
+</head>
+<body style="margin: 25px;">
+<input type="file" id="input" onchange="handleFiles(this.files)">
+<div id = "preview"></div>
+</body>
+</html>
